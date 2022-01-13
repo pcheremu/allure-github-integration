@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "jets": "^0.14.1",
+    "puppeteer": "^13.0.1"
+  },
+  "scripts": {
+    "test": "jest --colors --projects test_puppeteer"
+  }
+}

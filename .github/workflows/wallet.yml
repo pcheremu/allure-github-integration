@@ -1,0 +1,39 @@
+name: "test"
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  wallet:
+    name: "Launch testing"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      - uses: actions/checkout@v2
+
+      - run: yarn install --immutable
+      # this is needed to run chromium (puppeteer / dappeteer) with metamask extension
+      - name: Install setup-node
+        uses: actions/setup-node@v1
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+        with:
+          args: install
+
+      - name: Launch tests
+        uses: mujo-code/puppeteer-headful@8baa091f83c74d2eda8603b7f9990b20535e7a9c
+        with:
+          args: yarn test
+
+      - name: Save artifacts
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: wallet-artifacts_${{ github.run_number }}_${{ steps.date.outputs.date }}
+          path: artifacts/*
