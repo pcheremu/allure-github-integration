@@ -7,10 +7,8 @@ describe("test", () => {
         headless: false,
         slowMo: 5,
         args: [
-          //'--start-maximized',
           `--no-sandbox`,
           `--disable-setuid-sandbox`,
-          `--window-size=1920,1080`
         ],
       }
     );
