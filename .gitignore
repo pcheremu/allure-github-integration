@@ -12,10 +12,7 @@
 .pnp.*
 /node_modules
 
-# testing
-artifacts/
-!artifacts/readme.txt
-tests/artifacts/
+test_puppeteer/artifacts/*.png
 
 .vscode/
 .idea
