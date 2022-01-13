@@ -5,6 +5,7 @@
 
 module.exports = {
   name: 'test',
-  testMatch: ['test_puppeteer/*.test.ts'],
+  rootDir: './',
+  testMatch: ['<rootDir>/test_puppeteer/pew.test.ts'],
   verbose: true,
 };
