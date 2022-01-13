@@ -1,4 +1,4 @@
-name: Name your workflow
+name: Allure Demo
 
 on:
   push:
