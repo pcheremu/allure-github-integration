@@ -5,6 +5,11 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      TEST_ENDPOINT:
+        description: "Endpoint for tests"
+        required: true
+        default: https://dev.github.com
 
 jobs:
   wallet:
@@ -39,3 +44,9 @@ jobs:
         with:
           name: wallet-artifacts_${{ github.run_number }}_${{ steps.date.outputs.date }}
           path: artifacts/*
+      - name: Build with Gradle
+          run: ./allurectl watch -- ./gradlew test
+          env:
+            ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
+            TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
+            TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
