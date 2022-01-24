@@ -35,8 +35,9 @@ jobs:
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-
-      - uses: actions/checkout@v2
+        
+      - name: actions/checkout@v2
+        uses: actions/checkout@v2
       
       - name: yarn install --immutable
         run: yarn install --immutable # this is needed to run chromium (puppeteer / dappeteer) with metamask extension
@@ -55,13 +56,9 @@ jobs:
           
       - name: Prepare TestPlan
         run: ./allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
-        
-     # - name: Launch tests
-     #   uses: mujo-code/puppeteer-headful@8baa091f83c74d2eda8603b7f9990b20535e7a9c
-     #   env:
-     #     CI: 'true'
-     #   with:
-     #     args: yarn test  
+          
+      - name: Yarn version
+        run: yarn --version
      
       - name: Launch tests
         uses: mujo-code/puppeteer-headful@8baa091f83c74d2eda8603b7f9990b20535e7a9c
@@ -71,7 +68,7 @@ jobs:
           TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
           TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
         with:
-          args: ./allurectl watch -- ./yarn test # allows sending the test results in the real time
+          args: ./allurectl watch -- yarn test # allows sending the test results in the real time
           
       - name: Save artifacts
         uses: actions/upload-artifact@v2
