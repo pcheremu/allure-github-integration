@@ -37,9 +37,10 @@ jobs:
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
       - uses: actions/checkout@v2
-
-      - run: yarn install --immutable
-      # this is needed to run chromium (puppeteer / dappeteer) with metamask extension
+      
+      - name: yarn install --immutable
+        run: yarn install --immutable # this is needed to run chromium (puppeteer / dappeteer) with metamask extension
+      
       - name: Install setup-node
         uses: actions/setup-node@v1
         env:
