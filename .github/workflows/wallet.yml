@@ -75,12 +75,8 @@ jobs:
         run: ls -a
   
       - name: Upload tests
-        uses: mujo-code/puppeteer-headful@8baa091f83c74d2eda8603b7f9990b20535e7a9c
-        env:
-          ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
-        with:
-          args: ./allurectl upload --launch-name "test 2022" ${ALLURE_RESULTS}  # allows sending the test results in the real time
-          # args: ./allurectl watch --results ${ALLURE_RESULTS} -- yarn test # allows sending the test results in the real time
+        run: ./allurectl upload --launch-name "my_tests" ${ALLURE_RESULTS}  # allows sending the test results in the real time
+        # args: ./allurectl watch --results ${ALLURE_RESULTS} -- yarn test # allows sending the test results in the real time
 
       - name: Save artifacts
         uses: actions/upload-artifact@v2
