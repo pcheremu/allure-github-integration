@@ -41,7 +41,10 @@ jobs:
       
       - name: yarn install --immutable
         run: yarn install --immutable # this is needed to run chromium (puppeteer / dappeteer) with metamask extension
-      
+  
+      - name: Yarn version
+        run: yarn --version
+  
       - name: Install setup-node
         uses: actions/setup-node@v1
         env:
@@ -57,9 +60,6 @@ jobs:
           
       - name: Prepare TestPlan
         run: ./allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
-          
-      - name: Yarn version
-        run: yarn --version
      
       - name: Launch tests
         uses: mujo-code/puppeteer-headful@8baa091f83c74d2eda8603b7f9990b20535e7a9c
