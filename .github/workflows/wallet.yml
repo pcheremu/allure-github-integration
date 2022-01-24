@@ -60,7 +60,10 @@ jobs:
           
       - name: Prepare TestPlan
         run: ./allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
-     
+   
+      - name: Show files before
+        run: ls -a
+   
       - name: Launch tests
         uses: mujo-code/puppeteer-headful@8baa091f83c74d2eda8603b7f9990b20535e7a9c
         env:
@@ -69,8 +72,11 @@ jobs:
           TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
           TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
         with:
-          args: ./allurectl watch -- yarn test # allows sending the test results in the real time
-          
+          args: ./allurectl watch --results ${ALLURE_RESULTS} -- yarn test # allows sending the test results in the real time
+
+      - name: Show files after
+        run: ls -a
+  
       - name: Save artifacts
         uses: actions/upload-artifact@v2
         if: failure()
