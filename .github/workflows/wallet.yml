@@ -61,22 +61,27 @@ jobs:
       - name: Prepare TestPlan
         run: ./allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
    
-      - name: Show files before
-        run: ls -a
-   
+      - name: Echo
+        run: echo ${ALLURE_JOB_RUN_ID}
+  
       - name: Launch tests
         uses: mujo-code/puppeteer-headful@8baa091f83c74d2eda8603b7f9990b20535e7a9c
         env:
           CI: 'true'
-          ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
-          TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
-          TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
         with:
-          args: ./allurectl watch --results ${ALLURE_RESULTS} -- yarn test # allows sending the test results in the real time
+          args: yarn test
 
       - name: Show files after
         run: ls -a
   
+      - name: Upload tests
+        uses: mujo-code/puppeteer-headful@8baa091f83c74d2eda8603b7f9990b20535e7a9c
+        env:
+          ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
+        with:
+          args: ./allurectl upload --launch-name "test 2022" ${ALLURE_RESULTS}  # allows sending the test results in the real time
+          # args: ./allurectl watch --results ${ALLURE_RESULTS} -- yarn test # allows sending the test results in the real time
+
       - name: Save artifacts
         uses: actions/upload-artifact@v2
         if: failure()
