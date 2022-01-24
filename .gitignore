@@ -3,6 +3,7 @@
 # yarn
 .yarn/cache
 .yarn/install-state.gz
+package-lock.json
 # !.yarn/patches
 # !.yarn/releases
 # !.yarn/plugins
@@ -13,6 +14,7 @@
 /node_modules
 
 test_puppeteer/artifacts/*.png
+allure-results
 
 .vscode/
 .idea
