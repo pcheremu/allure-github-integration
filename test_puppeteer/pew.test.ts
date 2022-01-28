@@ -1,17 +1,17 @@
 import puppeteer from 'puppeteer';
-import { allure } from "allure-mocha/runtime";
-import { expect } from "chai";
 
-const commonStep = () =>
-  allure.step("External step", () => {
-    allure.step("Child step for External step", () => {
-      expect(false).to.equal(true);
-    });
-  });
+beforeEach(() => {
+  allure.step("Step inside before each", () => {});
+});
 
-describe("Allure step", () => {
-  it('Test run settings', async () => {
-    allure.step("First step - puppeteer.launch", () => {
+afterEach(() => {
+  allure.step("Step inside after each", () => {});
+});
+
+describe("test", () => {
+  test('Test run settings', () => {
+    allure.step("Simple step", () => {});
+    allure.step("Simple parent step", async () => {
       const browser = await puppeteer.launch(
         {
           headless: false,
@@ -22,30 +22,17 @@ describe("Allure step", () => {
           ],
         }
       );
-    });
-    allure.step("browser.newPage", () => {
       const page = await browser.newPage();
-    });
-    allure.step("goto example.com ", () => {
       await page.goto('https://example.com');
-    });
-    allure.step("page.screenshot", () => {
       await page.screenshot({ path: 'test_puppeteer/artifacts/example.png' });
-    });
-    allure.step("browser.close", () => {
       await browser.close();
     });
-  }, 15000);
-  
-  it("allows nested steps", () => {
-    allure.step("Parent step", () => {
-      allure.step("Child step", () => {
-        expect(true).to.equal(true);
-      });
-    });
-  });
-  
-  it("helpful for highlighting common test code usage", () => {
-    commonStep();
-  });
+    externalStep("step parameter");
+  },);
 });
+
+const externalStep = param =>
+  allure.step("External Step", () => {
+    allure.step(`External step parameter: ${param}`, () => {});
+    allure.step("Simple step inside test method", () => {});
+  });
