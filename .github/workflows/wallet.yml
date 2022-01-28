@@ -1,10 +1,10 @@
-name: "test"
+name: "pcheremu CI"
 
 on:
   push:
     branches:
       - main
-      - pcheremu-add-allure
+     # - pcheremu-add-allure
   workflow_dispatch:
     inputs:
       TEST_ENDPOINT: #this is used as ENV variable to provide host to run tests for
