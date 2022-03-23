@@ -8,4 +8,6 @@ module.exports = {
   rootDir: './',
   testMatch: ['<rootDir>/test_puppeteer/pew.test.ts'],
   verbose: true,
+  setupFilesAfterEnv: ["<rootDir>/report.js"],
+  testRunner: 'jest-jasmine2'
 };
